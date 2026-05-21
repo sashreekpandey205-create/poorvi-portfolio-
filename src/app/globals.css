@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  /* Custom Theme Colors */
+  --color-ivy: #0F1A2A;
+  --color-navy: #1c2e4a;
+  --color-cream: #fffdf0;
+  --color-creamon: #E8E4D5;
+  
+  /* Custom Font Families */
+  --font-heading: AlmostTextual, serif;
+  --font-sub: MelodrameCond, serif;
+  --font-body: "Helvetica World", sans-serif;
+  --font-accent: "Caveat", cursive;
+  --font-marquee: "Playfair Display", serif;
+}
+
+:root {
+  --background: #1c2e4a; /* navy */
+  --foreground: #fffdf0; /* cream */
+}
+
+/* ===== Fonts ===== */
+@font-face {
+  font-family: 'AlmostTextual';
+  src: url('/assets/fonts/AlmostTextual.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MelodrameCond';
+  src: url('/assets/fonts/RelationshipOfMelodrame.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica World';
+  src: url('/assets/fonts/HelveticaWorld.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  background-color: var(--color-navy);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* ===== Custom Animations ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -2%); }
+  30% { transform: translate(2%, -1%); }
+  50% { transform: translate(-1%, 2%); }
+  70% { transform: translate(2%, 1%); }
+  90% { transform: translate(-2%, 1%); }
+}
+
+.hero-grain::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  animation: grain 6s steps(10) infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.float-element {
+  animation: float 6s ease-in-out infinite;
+}
+.float-element:nth-child(2) {
+  animation-delay: -2s;
+}
+.float-element:nth-child(3) {
+  animation-delay: -4s;
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, rgba(255,253,240,0.6), rgba(255,253,240,1), rgba(255,253,240,0.6));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ===== Smooth Scroll ===== */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+::selection {
+  background: rgba(255, 253, 240, 0.15);
+  color: #fffdf0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-element { animation: none; }
+  .shimmer-text { animation: none; }
+  .hero-grain::before { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* Hide Unicorn Studio Watermark */
+a[href*="unicorn.studio"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
